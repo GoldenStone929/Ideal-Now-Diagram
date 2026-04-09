@@ -1,4 +1,4 @@
-"""Clinical Coding Center - Local Web UI (offline, no CDN)."""
+"""Ideal-Now Diagram - Local Web UI (offline, no CDN)."""
 
 from __future__ import annotations
 
@@ -269,7 +269,7 @@ INDEX_HTML = r"""<!doctype html>
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Clinical Coding Center</title>
+  <title>Ideal-Now Diagram</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; font-family: "Segoe UI", system-ui, sans-serif; background: #0d1117; color: #e6edf3; }
@@ -364,7 +364,7 @@ INDEX_HTML = r"""<!doctype html>
   <div id="app" class="sidebar-hidden">
     <aside id="sidebar">
       <div id="sidebar-head">
-        <h1>Clinical Coding Center</h1>
+        <h1>Ideal-Now Diagram</h1>
         <input id="search" placeholder="Search files..." />
       </div>
       <div id="tree-wrap"></div>
@@ -535,7 +535,7 @@ INDEX_HTML = r"""<!doctype html>
         {
           id: "KnowledgeCenter", label: "KnowledgeCenter", x: 260, y: 120, kind: "input",
           role: "Rules source", detail: "Provides policies, standards, terminology, and schemas.",
-          inside: ["scope / policies", "standards", "schemas", "clinical terminology"],
+          inside: ["scope / policies", "standards", "schemas", "domain terminology"],
         },
         {
           id: "ConfigCenter", label: "ConfigCenter", x: 860, y: 80, kind: "input",
@@ -577,7 +577,7 @@ INDEX_HTML = r"""<!doctype html>
         },
         {
           id: "e2", from: "TaskIntake", to: "Clarification", kind: "main",
-          why: "Raw request often misses clinical constraints.",
+          why: "Raw request often misses domain constraints.",
           does: "Collects missing rules like population, denominator, and windows.",
         },
         {
@@ -602,7 +602,7 @@ INDEX_HTML = r"""<!doctype html>
         },
         {
           id: "e7", from: "Validation", to: "HumanReview", kind: "main",
-          why: "Automation cannot replace clinical judgement.",
+          why: "Automation cannot replace human judgement.",
           does: "Hands off validated draft and findings to reviewer.",
         },
         {
@@ -776,7 +776,7 @@ INDEX_HTML = r"""<!doctype html>
             const pngBlob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
             if (!pngBlob) throw new Error("Failed to create PNG file.");
 
-            const filename = `clinical-coding-diagram-${exportFileTimestamp()}-${width}x${height}.png`;
+            const filename = `ideal-now-diagram-${exportFileTimestamp()}-${width}x${height}.png`;
             const downloadUrl = URL.createObjectURL(pngBlob);
             const a = document.createElement("a");
             a.href = downloadUrl;
@@ -1650,7 +1650,7 @@ def main():
     os.chdir(ROOT)
     server = ThreadedHTTPServer(("127.0.0.1", PORT), Handler)
     url = f"http://localhost:{PORT}/?v={APP_VERSION}"
-    print(f"\nClinical Coding Center Web UI")
+    print(f"\nIdeal-Now Diagram Web UI")
     print(f"{url}")
     print(f"version: {APP_VERSION}")
     print("Press Ctrl+C to stop.\n")

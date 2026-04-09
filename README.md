@@ -1,51 +1,65 @@
-# Clinical Coding Center
+# Ideal-Now Diagram
 
-Local-first text-to-structure system for clinical coding workflows.
+Any-context text-to-logic diagram generator.
 
-This project provides a web UI that converts long unstructured context (emails, SOPs, notes, stories, mixed logs) into:
+> Note: the very first prototype used a "Clinical Coding Center" architecture example.  
+> The current product is **not clinical-only**. It starts with an empty canvas and generates structure from **whatever context the user pastes**.
 
-- a dependency diagram with inspectable nodes/edges
-- a structured "logic steps" explanation
-- a folder-like section breakdown for traceability
+This project provides a local web app where users can:
 
-It is designed to be robust under noisy inputs and still return a usable output via fallback logic when providers are unavailable.
+- paste any long context (emails, brainstorms, SOPs, stories, meeting notes, logs, product ideas, etc.)
+- choose model mode (local LLM or external API)
+- input their own API key in the UI (session-level)
+- generate a structured dependency diagram + step-by-step logic text
 
 ---
 
 ## What It Does
 
-1. Accepts long free-form text.
-2. Chunks and normalizes the context.
-3. Generates a structured outline (local model, external API, or fallback heuristics).
-4. Infers sequential and cross-section dependencies.
-5. Renders an interactive diagram and logic explanation.
+1. Accepts raw free-form text from the input box.
+2. Splits long context into chunks and normalizes it.
+3. Builds a structured outline with major sections and key points.
+4. Infers sequential and cross-section relationships.
+5. Renders an interactive diagram plus a full "Structured Logic Steps" explanation.
+6. Falls back to heuristic generation if providers are unavailable.
 
 ---
 
 ## Key Features
 
-- **Local Web UI** (single `serve.py`, no build pipeline).
-- **Generation modes**:
-  - Local LLM (Ollama-compatible endpoint)
-  - External API (OpenAI-compatible endpoint)
-- **Session API key input** in UI (no key hardcoded in source).
-- **Progress bar + stage hints** during generation.
-- **Failure classification** (invalid key, rate limit, timeout, server errors).
-- **Dynamic edge overlap adjustment** to reduce line collisions.
-- **Multi-spine layout** for complex contexts.
-- **Color-coded edge types** (sequential, cross dependency, input, output, failure).
-- **Structured Logic Steps panel** (auto-generated textual explanation).
-- **PNG export** using the current browser viewport.
-- **Automatic cache-busting/version refresh** in UI.
+- **Empty-by-default canvas** (no fixed starter diagram/template).
+- **Send-driven pipeline** (`Send` button or `Ctrl/Cmd + Enter`).
+- **Model switch**:
+  - Local LLM mode
+  - External API mode (OpenAI-compatible, currently default in UI)
+- **User API key input in UI** (`OpenAI API Key` + `Set Key`).
+- **Progress bar with generation stages** and clear failure messages.
+- **Color-coded edges** (`main`, `sequential`, `cross`, `input`, `output`, `fail`).
+- **Dynamic edge offset/routing** to reduce overlap.
+- **Adaptive layout** (single-spine / multi-spine for complex content).
+- **Structured Logic Steps panel** auto-expanded to full content height.
+- **Export Diagram** to PNG based on current viewport sizing.
+- **Auto version refresh** to reduce stale frontend cache issues.
+
+---
+
+## Typical Inputs
+
+- "Messy brainstorm with mixed priorities"
+- "Customer email + internal action plan"
+- "Long SOP with exceptions and escalation rules"
+- "Narrative story that still has causal structure"
+
+As long as there is logical signal in the text, the system attempts to structure it.
 
 ---
 
 ## Tech Stack
 
 - Python `>=3.10`
-- Standard library HTTP server (`http.server` + threading)
-- `jsonschema`, `pydantic`, `pyyaml`, `rich`
-- Frontend: vanilla HTML/CSS/JS (embedded in `serve.py`)
+- Local server: `http.server` + threaded mixin
+- Core libs: `jsonschema`, `pydantic`, `pyyaml`, `rich`
+- Frontend: vanilla HTML/CSS/JS embedded in `serve.py`
 
 ---
 
@@ -75,7 +89,7 @@ clinical-coding-center/
 
 ## Quick Start
 
-### 1) Create environment and install dependencies
+### 1) Create environment and install
 
 ```bash
 cd clinical-coding-center
@@ -84,37 +98,37 @@ python -m venv .venv
 
 Activate:
 
-- Windows (PowerShell):
+- Windows (PowerShell)
 
 ```powershell
 .venv\Scripts\Activate.ps1
 ```
 
-- macOS/Linux:
+- macOS/Linux
 
 ```bash
 source .venv/bin/activate
 ```
 
-Install:
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2) Prepare environment file
+### 2) Create local env file
 
 ```bash
 cp .env.example .env
 ```
 
-If you are on Windows CMD:
+Windows CMD:
 
 ```cmd
 copy .env.example .env
 ```
 
-### 3) Run the app
+### 3) Start server
 
 ```bash
 python serve.py
@@ -124,47 +138,48 @@ Default URL: `http://localhost:8118`
 
 ---
 
-## API Key Configuration
+## API Key Setup
 
-You can set external API key in either way:
+Recommended flow for external API mode:
 
-1. **UI session key (recommended for local testing)**  
-   Use the `OpenAI API Key` input in the page and click `Set Key`.  
-   This sets key in the current server session (not persisted automatically).
+1. Open the web page.
+2. Enter key in `OpenAI API Key`.
+3. Click `Set Key`.
+4. Switch to external mode and click `Send`.
 
-2. **`.env` file (persistent local config)**  
-   Set:
-   - `OPENAI_API_KEY=...`
-   - `EXTERNAL_LLM_API_URL=...`
-   - `EXTERNAL_LLM_MODEL=...`
+The key is stored in current server session (not auto-persisted to Git files).
 
-> Security note: never commit real keys to Git.
+You may also set it in `.env`:
+
+- `OPENAI_API_KEY=...`
+- `EXTERNAL_LLM_API_URL=...`
+- `EXTERNAL_LLM_MODEL=...`
+
+Never commit real keys to the repository.
 
 ---
 
 ## Usage
 
-1. Paste long context into the main textarea.
-2. Select generation mode (`local` or `external`).
+1. Paste any text context into the main textarea.
+2. Select local or external generation mode.
 3. Click `Send`.
-4. Watch progress bar and stage messages.
-5. Inspect:
-   - diagram edges/nodes
-   - connection details
-   - structured logic steps panel
-6. Export diagram as PNG if needed.
+4. Track progress messages.
+5. Inspect nodes/edges and their connection details.
+6. Read generated "Structured Logic Steps".
+7. Export PNG if needed.
 
 ---
 
-## Running Tests
+## Tests
 
-Run full test suite:
+Run all tests:
 
 ```bash
 python -m pytest -q
 ```
 
-Run stress/robustness suites:
+Run robustness suites:
 
 ```bash
 python -m pytest tests/integration/test_diagram_output_stress.py -q
@@ -173,38 +188,38 @@ python -m pytest tests/integration/test_diagram_ultimate_robustness.py -q
 
 ---
 
-## HTTP Endpoints (Local Server)
+## Local HTTP Endpoints
 
-- `GET /` - Web UI
-- `GET /api/tree` - project tree
+- `GET /` - web UI
+- `GET /api/tree` - project tree data
 - `GET /api/file/<path>` - file viewer content
-- `GET /api/version` - app version
-- `GET /api/diagram/test-cases` - bundled generation cases
-- `POST /api/diagram/generate` - main generation endpoint
-- `GET /api/settings/openai-key-status` - external key configured status
+- `GET /api/version` - version info for frontend refresh
+- `GET /api/diagram/test-cases` - built-in generation test data
+- `POST /api/diagram/generate` - text-to-diagram generation API
+- `GET /api/settings/openai-key-status` - external key status
 - `POST /api/settings/openai-key` - set/clear external key for current session
 
 ---
 
 ## Troubleshooting
 
-- **Generation timeout**: provider may be slow/stuck; retry or switch mode.
-- **401/403**: invalid API key or no access; set key again.
-- **429**: rate limit; wait and retry.
-- **No diagram lines visible**: ensure input is non-empty and generation completed.
-- **Unexpected layout overlap**: regenerate once; routing is dynamic per graph.
+- **Timeout**: provider is slow; retry or switch mode.
+- **401/403**: key invalid or access denied; set key again.
+- **429**: rate limit reached; wait and retry.
+- **No output**: verify non-empty input and generation status.
+- **Crowded lines**: regenerate once; edge routing adjusts per graph.
 
 ---
 
 ## Contributing
 
-1. Create a feature branch.
-2. Keep changes small and testable.
-3. Run `python -m pytest -q` before PR.
-4. Do not commit secrets (`.env`, keys).
+1. Create a branch.
+2. Keep changes focused and testable.
+3. Run `python -m pytest -q`.
+4. Do not commit secrets (`.env`, API keys).
 
 ---
 
 ## License
 
-Add your preferred license file (for example `LICENSE`) before publishing publicly.
+Add your preferred license file (`LICENSE`) before public release.

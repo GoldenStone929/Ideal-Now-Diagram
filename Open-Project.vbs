@@ -1,5 +1,5 @@
 ' ============================================================
-' Clinical Coding Center — Web UI Launcher
+' Ideal-Now Diagram — Web UI Launcher
 ' Double-click this file to start the local review server
 ' and open it in your default browser.
 ' ============================================================
