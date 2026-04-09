@@ -1,5 +1,6 @@
 # Python
 __pycache__/
+.pytest_cache/
 *.py[cod]
 *.egg-info/
 dist/
@@ -23,10 +24,3 @@ venv/
 Thumbs.db
 desktop.ini
 
-# Runs and temp
-runs/active/*
-runs/failed/*
-archive/temp_dropzone/*
-
-# Keep directory structure
-!**/.gitkeep

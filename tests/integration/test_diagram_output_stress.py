@@ -46,12 +46,12 @@ def _mock_outline(name_prefix: str, section_count: int = 5, *, short_labels: boo
 
 def _build_stress_inputs(n: int = 36) -> list[str]:
     heads = [
-        "clinical trial summary",
+        "research trial summary",
         "factory incident log",
         "children story about a map",
         "meeting minutes for platform migration",
         "bug triage record",
-        "drug safety SOP notes",
+        "safety SOP notes",
     ]
     tails = [
         "identify risks and mitigation steps",

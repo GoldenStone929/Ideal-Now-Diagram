@@ -61,7 +61,7 @@ def _fuzz_context(seed: int) -> str:
         "planning",
         "incident",
         "story",
-        "clinical coding",
+        "task coding",
         "migration",
         "release",
         "analysis",

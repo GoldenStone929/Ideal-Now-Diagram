@@ -1,5 +1,0 @@
-{
-  "_description": "Master index of all registered assets. Each entry is keyed by asset_id.",
-  "_schema": "knowledge/schemas/asset_card.schema.json",
-  "assets": {}
-}

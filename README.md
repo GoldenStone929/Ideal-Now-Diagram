@@ -2,9 +2,6 @@
 
 Any-context text-to-logic diagram generator.
 
-> Note: the very first prototype used a "Clinical Coding Center" architecture example.  
-> The current product is **not clinical-only**. It starts with an empty canvas and generates structure from **whatever context the user pastes**.
-
 This project provides a local web app where users can:
 
 - paste any long context (emails, brainstorms, SOPs, stories, meeting notes, logs, product ideas, etc.)
@@ -58,7 +55,6 @@ As long as there is logical signal in the text, the system attempts to structure
 
 - Python `>=3.10`
 - Local server: `http.server` + threaded mixin
-- Core libs: `jsonschema`, `pydantic`, `pyyaml`, `rich`
 - Frontend: vanilla HTML/CSS/JS embedded in `serve.py`
 
 ---
@@ -66,21 +62,17 @@ As long as there is logical signal in the text, the system attempts to structure
 ## Project Structure
 
 ```text
-clinical-coding-center/
+project-root/
 ├── serve.py
 ├── diagram_autogen/
 │   ├── __init__.py
 │   └── pipeline.py
-├── knowledge/
-├── config/
-├── data/
-├── workflows/
-├── tools/
-├── prompts/
 ├── tests/
-├── docs/
-├── evals/
+│   ├── unit/
+│   └── integration/
+├── Open-Project.vbs
 ├── .env.example
+├── .gitignore
 ├── requirements.txt
 └── pyproject.toml
 ```
@@ -92,7 +84,7 @@ clinical-coding-center/
 ### 1) Create environment and install
 
 ```bash
-cd clinical-coding-center
+cd <project-folder>
 python -m venv .venv
 ```
 
