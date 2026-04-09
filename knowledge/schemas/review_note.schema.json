@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review_note.schema.json",
+  "title": "Review Note",
+  "description": "Record of a human review decision on an asset",
+  "type": "object",
+  "required": [
+    "review_id",
+    "asset_id",
+    "reviewer_id",
+    "review_date",
+    "decision"
+  ],
+  "properties": {
+    "review_id": {
+      "type": "string",
+      "pattern": "^[a-f0-9\\-]{36}$"
+    },
+    "asset_id": {
+      "type": "string",
+      "pattern": "^[a-f0-9\\-]{36}$"
+    },
+    "reviewer_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "review_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "level": {
+      "type": "string",
+      "enum": ["standard", "production"],
+      "description": "standard = reviewer_approved; production = production_approved"
+    },
+    "decision": {
+      "type": "string",
+      "enum": [
+        "approved",
+        "approved_with_changes",
+        "needs_revision",
+        "rejected"
+      ]
+    },
+    "comments": {
+      "type": "string"
+    },
+    "line_references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "line": { "type": "integer" },
+          "comment": { "type": "string" }
+        }
+      }
+    },
+    "suggested_fixes": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

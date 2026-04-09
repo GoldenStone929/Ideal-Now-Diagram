@@ -1,0 +1,15 @@
+ranking:
+  method: hybrid
+  weights:
+    keyword: 0.3
+    semantic: 0.7
+  reranker:
+    enabled: true
+    top_k_before_rerank: 20
+    top_k_after_rerank: 5
+  status_boost:
+    production_approved: 1.5
+    reviewer_approved: 1.2
+    tested: 1.0
+    draft: 0.5
+    deprecated: 0.1

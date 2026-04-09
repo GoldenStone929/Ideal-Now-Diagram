@@ -1,0 +1,4 @@
+{
+  "_description": "Dependency and relationship links between assets. Each entry maps an asset_id to its related asset_ids.",
+  "links": {}
+}

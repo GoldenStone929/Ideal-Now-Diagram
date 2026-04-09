@@ -1,0 +1,12 @@
+{
+  "case_id": "fc-001-0000-0000-0000-000000000001",
+  "related_task_id": "t-001-0000-0000-0000-000000000001",
+  "related_asset_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "failure_type": "logic_error",
+  "failure_description": "Generated code counted events instead of subjects for the 'Number of subjects with at least one TEAE' row. Used COUNT(*) instead of COUNT(DISTINCT USUBJID).",
+  "root_cause": "Clarification step did not confirm counting unit; LLM defaulted to event counting.",
+  "corrective_action": "Added 'counting_unit' to mandatory clarification checklist for ae_summary tasks.",
+  "related_patterns": ["counting_unit_mismatch", "events_vs_subjects"],
+  "created_by": "reviewer_001",
+  "created_at": "2026-04-08T14:00:00Z"
+}

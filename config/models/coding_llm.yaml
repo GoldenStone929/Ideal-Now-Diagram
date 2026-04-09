@@ -1,0 +1,9 @@
+coding_llm:
+  provider: openai
+  model: gpt-4o
+  temperature: 0.2
+  max_tokens: 4096
+  system_prompt_path: prompts/code_generation.md
+  retry:
+    max_retries: 3
+    backoff_seconds: 2

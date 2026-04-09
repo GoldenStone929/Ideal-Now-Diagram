@@ -1,0 +1,34 @@
+asset_status:
+  levels:
+    - id: draft
+      display: Draft
+      description: Newly created or LLM-generated; not yet reviewed
+      location: data/draft_library/
+    - id: tested
+      display: Tested
+      description: Passed automated validation checks
+      location: data/draft_library/
+    - id: reviewer_approved
+      display: Reviewer Approved
+      description: Passed human review
+      location: data/validated_library/reviewer_approved/
+    - id: production_approved
+      display: Production Approved
+      description: Approved for production use
+      location: data/validated_library/production_approved/
+    - id: deprecated
+      display: Deprecated
+      description: No longer recommended for use
+      location: data/validated_library/deprecated/
+
+  allowed_transitions:
+    - from: draft
+      to: tested
+    - from: tested
+      to: reviewer_approved
+    - from: reviewer_approved
+      to: production_approved
+    - from: reviewer_approved
+      to: deprecated
+    - from: production_approved
+      to: deprecated

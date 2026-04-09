@@ -1,0 +1,14 @@
+{
+  "description": "Create a TEAE summary table by System Organ Class and Preferred Term for the safety population",
+  "task_type": "ae_summary",
+  "requester": "example_user",
+  "context": {
+    "study": "STUDY-001",
+    "population": "safety",
+    "big_n_definition": "treated subjects (SAFFL='Y')",
+    "counting_unit": "subjects",
+    "treatment_groups": ["Placebo", "Drug 10mg", "Drug 20mg", "Total"],
+    "time_window": "TEAE (onset after first dose, up to 30 days post last dose)",
+    "output_format": "table"
+  }
+}
